@@ -3,7 +3,7 @@ import win32console
 import win32gui
 
 ventana = win32console.GetConsoleWindow()
-win32gui.ShowWindow(ventana,0)
+win32gui.ShowWindow(ventana, 0)
 
 pygame.init()
 
@@ -21,11 +21,15 @@ font = pygame.font.SysFont("Calibri Bold", 80)
 # Crear una lista para almacenar el estado de cada celda
 texto = []
 for i in range(1, 91):
-    texto.append([str(i), str((i-1)//10), str((i-1)%10), False]) 
+    texto.append([str(i), str((i-1)//10), str((i-1)%10), False])
 
 # Definir márgenes
 margen_x = 20
 margen_y = 20
+
+# Número de filas y columnas
+num_filas = 9
+num_columnas = 10
 
 def centrar_texto(screen, tex, fila, columna, cell_width, cell_height, margen_x, margen_y, color_fondo):
     text_surface = font.render(tex, True, color_texto, color_fondo)
@@ -43,7 +47,6 @@ def centrar_texto(screen, tex, fila, columna, cell_width, cell_height, margen_x,
     screen.blit(text_surface, (x_pos, y_pos))
 
 fullscreen = False
-color_fondo = color_fondo_normal 
 
 while running:
     for event in pygame.event.get():
@@ -76,18 +79,14 @@ while running:
                 if x_pos <= mouse_x <= x_pos + cell_width and y_pos <= mouse_y <= y_pos + cell_height:
                     texto[int(fila) * num_columnas + int(columna)][3] = not clicked  # Cambiar estado
 
-    screen.fill(color_fondo)  # Rellena la pantalla con el color de fondo actualizado
-
     # tamaño actual de la ventana
     screen_width, screen_height = screen.get_size()
-
-    # número de filas y columnas basado en el texto
-    num_filas = 9
-    num_columnas = 10
 
     # Calcula el ancho y alto de cada celda
     cell_width = (screen_width - 2 * margen_x) // num_columnas
     cell_height = (screen_height - 2 * margen_y) // num_filas
+
+    screen.fill(color_fondo_normal)  # Rellena la pantalla con el color de fondo normal
 
     for tex, fila, columna, clicked in texto:
         color_fondo = color_fondo_clicked if clicked else color_fondo_normal
