@@ -54,7 +54,7 @@ fullscreen = False
 color_circulo = 'red'
 posicion = pygame.Vector2(200, 50)
 
-random_number = None
+random_number = 'Comenzar'
 used_numbers = set()
 
 while running:
@@ -75,6 +75,7 @@ while running:
             elif event.key == pygame.K_r:
                 color_fondo = color_fondo_normal  # Actualiza el color de fondo al blanco
                 used_numbers.clear()
+                random_number = 'Comenzar'
                 for i in range(len(texto)):
                     texto[i][3] = False  # Resetea el estado de clic de todas las celdas
         elif event.type == pygame.MOUSEBUTTONDOWN:
@@ -91,7 +92,7 @@ while running:
                             used_numbers.add(new_number)
                             break
                 else:
-                    random_number = "No más números disponibles"
+                    random_number = "Han salido todos los números"
                 # Cambia el color del círculo
                 color_circulo = "green" if color_circulo == "red" else "red"
 
